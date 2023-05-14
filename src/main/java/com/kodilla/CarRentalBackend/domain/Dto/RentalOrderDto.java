@@ -1,7 +1,6 @@
 package com.kodilla.CarRentalBackend.domain.Dto;
 
 import com.kodilla.CarRentalBackend.domain.OrderStatus;
-import com.kodilla.CarRentalBackend.domain.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

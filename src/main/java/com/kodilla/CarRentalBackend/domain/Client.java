@@ -1,6 +1,5 @@
 package com.kodilla.CarRentalBackend.domain;
 
-import com.fasterxml.jackson.databind.deser.UnresolvedId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
