@@ -33,7 +33,8 @@ public class Driver {
     @OneToMany(
             mappedBy = "driver",
             targetEntity = Reservation.class,
-            cascade = CascadeType.MERGE
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
     )
     private List<Reservation> reservations;
 

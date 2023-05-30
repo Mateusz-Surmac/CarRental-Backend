@@ -48,12 +48,11 @@ public class Reservation {
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    public Reservation(LocalDate rentalStart, LocalDate rentalEnd, String rentalPlace, String returnPlace, double price, Car car, Driver driver, Client client) {
+    public Reservation(LocalDate rentalStart, LocalDate rentalEnd, String rentalPlace, String returnPlace, Car car, Driver driver, Client client) {
         this.rentalStart = rentalStart;
         this.rentalEnd = rentalEnd;
         this.rentalPlace = rentalPlace;
         this.returnPlace = returnPlace;
-        this.price = price;
         this.car = car;
         this.driver = driver;
         this.client = client;

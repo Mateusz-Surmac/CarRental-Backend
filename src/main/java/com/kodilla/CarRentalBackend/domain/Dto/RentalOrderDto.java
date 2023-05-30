@@ -5,15 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RentalOrderDto {
     private Long id;
-    private BigDecimal cost;
-    private BigDecimal costPaid;
+    private double cost;
+    private double costPaid;
     private OrderStatus orderStatus;
     private double fuelLevel;
     private Long drivenKilometers;

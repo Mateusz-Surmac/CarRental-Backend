@@ -1,12 +1,13 @@
 package com.kodilla.CarRentalBackend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "RENTAL_ORDER")
@@ -22,17 +23,20 @@ public class RentalOrder {
     private Long id;
 
     @Column(name = "COST")
-    private BigDecimal cost;
+    private double cost;
 
     @Column(name = "COST_PAID")
-    private BigDecimal costPaid;
+    private double costPaid;
 
     @Column(name = "ORDER_STATUS")
     private OrderStatus orderStatus;
 
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "1.0")
     @Column(name = "FUEL_LEVEL")
     private double fuelLevel;
 
+    @Min(value = 0)
     @Column(name = "DRIVEN_KILOMETERS")
     private Long drivenKilometers;
 
@@ -40,17 +44,13 @@ public class RentalOrder {
     @JoinColumn(name = "RESERVATION_ID")
     private Reservation reservation;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "DAMAGE_ID")
     private Damage damage;
 
-    public RentalOrder(BigDecimal cost, BigDecimal costPaid, OrderStatus orderStatus, double fuelLevel, Long drivenKilometers, Reservation reservation, Damage damage) {
-        this.cost = cost;
-        this.costPaid = costPaid;
-        this.orderStatus = orderStatus;
+    public RentalOrder(double fuelLevel, Long drivenKilometers, Reservation reservation) {
         this.fuelLevel = fuelLevel;
         this.drivenKilometers = drivenKilometers;
         this.reservation = reservation;
-        this.damage = damage;
     }
 }

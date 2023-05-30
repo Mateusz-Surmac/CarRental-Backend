@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CAR")
@@ -51,7 +52,8 @@ public class Car {
     @OneToMany(
             mappedBy = "car",
             targetEntity = Reservation.class,
-            cascade = CascadeType.MERGE
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
     )
     private List<Reservation> reservations;
 
@@ -78,5 +80,17 @@ public class Car {
         this.productionYear = productionYear;
         this.mileage = mileage;
         this.damaged = damaged;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car car)) return false;
+        return Double.compare(car.engineCapacity, engineCapacity) == 0 && seatsNumber == car.seatsNumber && manualGearbox == car.manualGearbox && productionYear == car.productionYear && damaged == car.damaged && Objects.equals(id, car.id) && Objects.equals(brand, car.brand) && Objects.equals(model, car.model) && carClass == car.carClass && Objects.equals(mileage, car.mileage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, brand, model, engineCapacity, carClass, seatsNumber, manualGearbox, productionYear, mileage, damaged);
     }
 }

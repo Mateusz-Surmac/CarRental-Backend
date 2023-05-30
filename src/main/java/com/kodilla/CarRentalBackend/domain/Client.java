@@ -36,7 +36,8 @@ public class Client {
     @OneToMany(
             mappedBy = "client",
             targetEntity = Reservation.class,
-            cascade = CascadeType.MERGE
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
     )
     private List<Reservation> reservations;
 
