@@ -1,6 +1,6 @@
 package com.kodilla.CarRentalBackend.mapper;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.CarNotFoundException;
+import com.kodilla.CarRentalBackend.exceptions.CarNotFoundException;
 import com.kodilla.CarRentalBackend.domain.Damage;
 import com.kodilla.CarRentalBackend.domain.Dto.DamageDto;
 import com.kodilla.CarRentalBackend.repository.CarRepository;

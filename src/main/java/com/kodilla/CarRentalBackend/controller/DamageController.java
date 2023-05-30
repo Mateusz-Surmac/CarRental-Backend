@@ -1,9 +1,8 @@
 package com.kodilla.CarRentalBackend.controller;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.CarNotFoundException;
-import com.kodilla.CarRentalBackend.controller.exceptions.DamageNotFoundExpection;
 import com.kodilla.CarRentalBackend.domain.Damage;
 import com.kodilla.CarRentalBackend.domain.Dto.DamageDto;
+import com.kodilla.CarRentalBackend.exceptions.*;
 import com.kodilla.CarRentalBackend.mapper.DamageMapper;
 import com.kodilla.CarRentalBackend.service.DamageDbService;
 import lombok.RequiredArgsConstructor;
@@ -21,26 +20,25 @@ public class DamageController {
     private final DamageDbService damageDbService;
     private final DamageMapper damageMapper;
 
-
     @GetMapping
     public ResponseEntity<List<DamageDto>> getDamageList() {
         return ResponseEntity.ok(damageMapper.mapToDamageDtoList(damageDbService.getDamageList()));
     }
 
     @GetMapping(value = "{damageId}")
-    public ResponseEntity<DamageDto> getDamage(@PathVariable Long damageId) throws DamageNotFoundExpection {
+    public ResponseEntity<DamageDto> getDamage(@PathVariable Long damageId) throws DamageNotFoundException {
         return ResponseEntity.ok(damageMapper.mapToDamageDto(damageDbService.getDamageById(damageId)));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DamageDto> saveDamage(@RequestBody DamageDto damageDto) throws CarNotFoundException {
+    public ResponseEntity<DamageDto> saveDamage(@RequestBody DamageDto damageDto) throws CarNotFoundException, DamageNotFoundException, ReservationNotFoundException, RentalOrderNotFoundException, PaymentAmountExceededException {
         Damage damage = damageMapper.mapToDamage(damageDto);
         damageDbService.saveDamage(damage);
         return ResponseEntity.ok(damageMapper.mapToDamageDto(damage));
     }
 
     @PutMapping(value = "{damageId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DamageDto> updateDamage(@PathVariable Long damageId, @RequestBody DamageDto damageDto) throws DamageNotFoundExpection, CarNotFoundException {
+    public ResponseEntity<DamageDto> updateDamage(@PathVariable Long damageId, @RequestBody DamageDto damageDto) throws DamageNotFoundException, CarNotFoundException, ReservationNotFoundException, PaymentAmountExceededException, RentalOrderNotFoundException{
         Damage updatedDamage = damageDbService.updateDamage(damageId, damageDto);
         DamageDto updatedDamageDto = damageMapper.mapToDamageDto(updatedDamage);
         return ResponseEntity.ok(updatedDamageDto);
