@@ -1,6 +1,6 @@
 package com.kodilla.CarRentalBackend.service;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.DriverNotFoundException;
+import com.kodilla.CarRentalBackend.exceptions.DriverNotFoundException;
 import com.kodilla.CarRentalBackend.domain.Driver;
 import com.kodilla.CarRentalBackend.domain.Dto.DriverDto;
 import com.kodilla.CarRentalBackend.repository.DriverRepository;
@@ -20,7 +20,7 @@ public class DriverDbService {
         return driverRepository.findAll();
     }
 
-    public Driver getDriverById(Long driverId) throws DriverNotFoundException {
+    public Driver getDriverById(final Long driverId) throws DriverNotFoundException {
         return driverRepository.findById(driverId).orElseThrow(DriverNotFoundException::new);
     }
 
@@ -41,6 +41,4 @@ public class DriverDbService {
         driver.setCompanyEmployee(driverDto.isCompanyEmployee());
         return driverRepository.save(driver);
     }
-
-
 }

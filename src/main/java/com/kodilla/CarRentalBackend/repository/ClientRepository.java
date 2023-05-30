@@ -14,4 +14,5 @@ public interface ClientRepository extends CrudRepository<Client, Long> {
 
     List<Client> findAll();
     Optional<Client> findById(Long id);
+    List<Client> findByVipStatus(boolean vipStatus);
 }

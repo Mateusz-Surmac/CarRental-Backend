@@ -1,6 +1,6 @@
 package com.kodilla.CarRentalBackend.controller;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.ClientNotFoundException;
+import com.kodilla.CarRentalBackend.exceptions.ClientNotFoundException;
 import com.kodilla.CarRentalBackend.domain.Client;
 import com.kodilla.CarRentalBackend.domain.Dto.ClientDto;
 import com.kodilla.CarRentalBackend.mapper.ClientMapper;
@@ -56,7 +56,7 @@ public class ClientController {
     }
 
     @DeleteMapping(value = "{clientId}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) throws ClientNotFoundException{
         clientDbService.deleteClientById(clientId);
         return ResponseEntity.ok().build();
     }

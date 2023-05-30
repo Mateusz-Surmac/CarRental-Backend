@@ -1,6 +1,6 @@
 package com.kodilla.CarRentalBackend.service;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.ClientNotFoundException;
+import com.kodilla.CarRentalBackend.exceptions.ClientNotFoundException;
 import com.kodilla.CarRentalBackend.domain.Client;
 import com.kodilla.CarRentalBackend.domain.Dto.ClientDto;
 import com.kodilla.CarRentalBackend.repository.ClientRepository;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,14 +19,12 @@ public class ClientDbService {
         return clientRepository.findAll();
     }
 
-    public Client getClientById(Long clientId) throws ClientNotFoundException {
+    public Client getClientById(final Long clientId) throws ClientNotFoundException {
         return clientRepository.findById(clientId).orElseThrow(ClientNotFoundException::new);
     }
 
     public List<Client> getClientListByVipStatus() {
-        return clientRepository.findAll().stream()
-                .filter(Client::isVipStatus)
-                .collect(Collectors.toList());
+        return clientRepository.findByVipStatus(true);
     }
 
     public Client saveClient(final Client client) {
@@ -49,8 +46,10 @@ public class ClientDbService {
         return clientRepository.save(client);
     }
 
-    public void deleteClientById(final Long clientId) {
-        Client client = clientRepository.findById(clientId).orElseThrow();
-        clientRepository.delete(client);
+    public void deleteClientById(final Long clientId) throws ClientNotFoundException{
+        if (!clientRepository.existsById(clientId)) {
+            throw new ClientNotFoundException();
+        }
+        clientRepository.deleteById(clientId);
     }
 }

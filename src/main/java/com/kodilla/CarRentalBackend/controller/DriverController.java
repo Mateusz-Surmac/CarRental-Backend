@@ -1,11 +1,9 @@
 package com.kodilla.CarRentalBackend.controller;
 
-import com.kodilla.CarRentalBackend.controller.exceptions.DriverNotFoundException;
+import com.kodilla.CarRentalBackend.exceptions.DriverNotFoundException;
 import com.kodilla.CarRentalBackend.domain.Driver;
 import com.kodilla.CarRentalBackend.domain.Dto.DriverDto;
-import com.kodilla.CarRentalBackend.domain.Reservation;
 import com.kodilla.CarRentalBackend.mapper.DriverMapper;
-import com.kodilla.CarRentalBackend.repository.DriverRepository;
 import com.kodilla.CarRentalBackend.service.DriverDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
