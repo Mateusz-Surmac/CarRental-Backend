@@ -1,5 +1,7 @@
 package com.kodilla.CarRentalBackend.domain;
 
+import com.kodilla.CarRentalBackend.observer.CarObserver;
+import com.kodilla.CarRentalBackend.observer.ClientCarObserver;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -57,6 +59,10 @@ public class Car {
     )
     private List<Reservation> reservations;
 
+    @Transient
+    private List<ClientCarObserver> observers;
+
+
     public Car(String brand, String model, double engineCapacity, CarClass carClass, int seatsNumber, boolean manualGearbox, int productionYear, Long mileage) {
         this.brand = brand;
         this.model = model;
@@ -93,4 +99,11 @@ public class Car {
     public int hashCode() {
         return Objects.hash(id, brand, model, engineCapacity, carClass, seatsNumber, manualGearbox, productionYear, mileage, damaged);
     }
+
+    public void notifyObservers() {
+        for (CarObserver observer : observers) {
+            observer.updateCarDamage(this);
+        }
+    }
+
 }

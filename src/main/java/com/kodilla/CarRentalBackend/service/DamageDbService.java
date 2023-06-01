@@ -1,18 +1,24 @@
 package com.kodilla.CarRentalBackend.service;
 
 import com.kodilla.CarRentalBackend.domain.Car;
+import com.kodilla.CarRentalBackend.domain.Client;
 import com.kodilla.CarRentalBackend.domain.Damage;
 import com.kodilla.CarRentalBackend.domain.Dto.DamageDto;
 import com.kodilla.CarRentalBackend.domain.RentalOrder;
 import com.kodilla.CarRentalBackend.exceptions.*;
 import com.kodilla.CarRentalBackend.mapper.CarMapper;
 import com.kodilla.CarRentalBackend.mapper.RentalOrderMapper;
+import com.kodilla.CarRentalBackend.observer.ClientCarObserver;
 import com.kodilla.CarRentalBackend.repository.CarRepository;
+import com.kodilla.CarRentalBackend.repository.ClientRepository;
 import com.kodilla.CarRentalBackend.repository.DamageRepository;
 import com.kodilla.CarRentalBackend.repository.RentalOrderRepository;
+import com.kodilla.CarRentalBackend.scheduler.EmailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,8 +30,10 @@ public class DamageDbService {
     private final RentalOrderRepository rentalOrderRepository;
     private final RentalOrderDbService rentalOrderDbService;
     private final RentalOrderMapper rentalOrderMapper;
+    private final ClientRepository clientRepository;
     private final CarDbService carDbService;
     private final CarMapper carMapper;
+    private final EmailSender emailSender;
 
     public List<Damage> getDamageList() {
         return damageRepository.findAll();
@@ -37,8 +45,7 @@ public class DamageDbService {
 
     public Damage saveDamage(final Damage damage) throws CarNotFoundException, DamageNotFoundException, ReservationNotFoundException, RentalOrderNotFoundException, PaymentAmountExceededException {
         Car car = carRepository.findById(damage.getCar().getId()).orElseThrow(CarNotFoundException::new);
-        car.setDamaged(true);
-        carDbService.updateCar(car.getId(),carMapper.mapToCarDto(car));
+        setDamageAndNotifyObservers(car);
 
         damageRepository.save(damage);
         assignDamageToRentalOrderAndUpdateCost(damage);
@@ -73,4 +80,20 @@ public class DamageDbService {
             }
         }
     }
+
+    private void setDamageAndNotifyObservers(Car car) throws CarNotFoundException {
+        car.setDamaged(true);
+        carDbService.updateCar(car.getId(),carMapper.mapToCarDto(car));
+        List<Client> clients = clientRepository.findByReservationsCarIdAndReservationsRentalEndGreaterThanEqual(car.getId(), LocalDate.now());
+        List<ClientCarObserver> observers = new ArrayList<>();
+
+        for (Client client : clients) {
+            ClientCarObserver observer = new ClientCarObserver(client,emailSender);
+            observers.add(observer);
+        }
+
+        car.setObservers(observers);
+        car.notifyObservers();
+    }
+
 }

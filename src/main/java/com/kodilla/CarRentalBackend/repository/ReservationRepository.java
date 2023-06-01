@@ -19,5 +19,6 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     List<Reservation> findAllByClientId(Long clientId);
     boolean existsByCarIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqual(Long carId, LocalDate rentalStart, LocalDate rentalEnd);
     boolean existsByDriverIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqual(Long driverId, LocalDate rentalStart, LocalDate rentalEnd);
+    List<Reservation> findByClientIdAndRentalStartBetween(Long clientId, LocalDate currentDate,LocalDate reminderDate);
 
 }
