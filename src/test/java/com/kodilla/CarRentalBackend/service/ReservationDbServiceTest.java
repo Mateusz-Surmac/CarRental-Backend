@@ -1,8 +1,6 @@
 package com.kodilla.CarRentalBackend.service;
 
 import com.kodilla.CarRentalBackend.api.bingMaps.client.BingMapsClient;
-import com.kodilla.CarRentalBackend.domain.CarClass;
-import com.kodilla.CarRentalBackend.domain.Dto.ReservationDto;
 import com.kodilla.CarRentalBackend.domain.Reservation;
 import com.kodilla.CarRentalBackend.exceptions.*;
 import com.kodilla.CarRentalBackend.repository.CarRepository;

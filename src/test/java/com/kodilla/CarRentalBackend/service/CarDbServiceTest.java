@@ -5,7 +5,6 @@ import com.kodilla.CarRentalBackend.domain.CarClass;
 import com.kodilla.CarRentalBackend.domain.Dto.CarDto;
 import com.kodilla.CarRentalBackend.exceptions.CarNotFoundException;
 import com.kodilla.CarRentalBackend.repository.CarRepository;
-import com.kodilla.CarRentalBackend.service.CarDbService;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 

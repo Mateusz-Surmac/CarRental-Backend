@@ -1,17 +1,12 @@
 package com.kodilla.CarRentalBackend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.kodilla.CarRentalBackend.controller.CarController;
 import com.kodilla.CarRentalBackend.domain.Car;
 import com.kodilla.CarRentalBackend.domain.CarClass;
 import com.kodilla.CarRentalBackend.domain.Dto.CarDto;
-import com.kodilla.CarRentalBackend.exceptions.CarNotFoundException;
 import com.kodilla.CarRentalBackend.mapper.CarMapper;
 import com.kodilla.CarRentalBackend.service.CarDbService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

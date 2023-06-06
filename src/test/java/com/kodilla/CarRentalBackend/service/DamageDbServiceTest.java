@@ -2,10 +2,7 @@ package com.kodilla.CarRentalBackend.service;
 
 import com.kodilla.CarRentalBackend.domain.Car;
 import com.kodilla.CarRentalBackend.domain.Damage;
-import com.kodilla.CarRentalBackend.domain.Dto.DamageDto;
 import com.kodilla.CarRentalBackend.domain.Dto.RentalOrderDto;
-import com.kodilla.CarRentalBackend.domain.RentalOrder;
-import com.kodilla.CarRentalBackend.domain.Reservation;
 import com.kodilla.CarRentalBackend.exceptions.*;
 import com.kodilla.CarRentalBackend.mapper.CarMapper;
 import com.kodilla.CarRentalBackend.mapper.RentalOrderMapper;
@@ -14,15 +11,12 @@ import com.kodilla.CarRentalBackend.repository.ClientRepository;
 import com.kodilla.CarRentalBackend.repository.DamageRepository;
 import com.kodilla.CarRentalBackend.repository.RentalOrderRepository;
 import com.kodilla.CarRentalBackend.scheduler.EmailSender;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

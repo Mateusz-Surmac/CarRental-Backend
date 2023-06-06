@@ -5,7 +5,6 @@ import com.kodilla.CarRentalBackend.domain.Damage;
 import com.kodilla.CarRentalBackend.domain.Dto.DamageDto;
 import com.kodilla.CarRentalBackend.exceptions.CarNotFoundException;
 import com.kodilla.CarRentalBackend.repository.CarRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

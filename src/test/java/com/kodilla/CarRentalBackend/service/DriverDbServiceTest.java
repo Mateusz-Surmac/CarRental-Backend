@@ -4,7 +4,6 @@ import com.kodilla.CarRentalBackend.domain.Driver;
 import com.kodilla.CarRentalBackend.domain.Dto.DriverDto;
 import com.kodilla.CarRentalBackend.exceptions.DriverNotFoundException;
 import com.kodilla.CarRentalBackend.repository.DriverRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
