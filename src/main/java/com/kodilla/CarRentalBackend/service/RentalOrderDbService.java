@@ -75,7 +75,9 @@ public class RentalOrderDbService {
         rentalOrder.setDrivenKilometers(rentalOrderDto.getDrivenKilometers());
         rentalOrder.setReservation(reservationRepository.findById(rentalOrderDto.getReservationId()).orElseThrow(ReservationNotFoundException::new));
 
-        rentalOrder.setDamage(damageRepository.findById(rentalOrderDto.getDamageId()).orElseThrow(DamageNotFoundException::new));
+        if (rentalOrderDto.getDamageId() != null){
+            rentalOrder.setDamage(damageRepository.findById(rentalOrderDto.getDamageId()).orElseThrow(DamageNotFoundException::new));
+        }
 
         rentalOrder.setCost(calculateCost(rentalOrder));
 
@@ -167,6 +169,7 @@ public class RentalOrderDbService {
             case LUXURY -> 80.0;
             case SPORTS -> 50.0;
             case TRANSPORT -> 100.0;
+            default -> 70.0;
         };
     }
 }

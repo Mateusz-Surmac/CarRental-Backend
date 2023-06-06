@@ -43,20 +43,22 @@ public class ReservationDbService {
     }
 
     public Reservation saveReservation(final Reservation reservation) throws CarAlreadyReservedException, DriverAlreadyReservedException, DamagedCarException {
-        boolean carAvailable = reservationRepository.existsByCarIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqual(
-                reservation.getCar().getId(), reservation.getRentalStart(), reservation.getRentalEnd());
-        if (carAvailable) {
+        boolean carReservedByOtherReservation = reservationRepository.existsByCarIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqualAndIdNot(
+                reservation.getCar().getId(), reservation.getRentalStart(), reservation.getRentalEnd(), reservation.getId());
+        if (carReservedByOtherReservation) {
             throw new CarAlreadyReservedException();
         }
 
-        boolean driverAvailable = reservationRepository.existsByDriverIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqual(
-                reservation.getDriver().getId(), reservation.getRentalStart(), reservation.getRentalEnd());
-        if (driverAvailable) {
+        boolean driverReservedByOtherReservation = reservationRepository.existsByDriverIdAndRentalEndGreaterThanEqualAndRentalStartLessThanEqualAndIdNot(
+                reservation.getDriver().getId(), reservation.getRentalStart(), reservation.getRentalEnd(), reservation.getId());
+        if (driverReservedByOtherReservation) {
             throw new DriverAlreadyReservedException();
         }
+
         if (reservation.getCar().isDamaged()) {
             throw new DamagedCarException();
         }
+
         reservation.setPrice(calculatePrice(reservation));
         return reservationRepository.save(reservation);
     }
@@ -66,7 +68,7 @@ public class ReservationDbService {
         reservation.setRentalStart(reservationDto.getRentalStart());
         reservation.setRentalEnd(reservationDto.getRentalEnd());
         reservation.setRentalPlace(reservationDto.getRentalPlace());
-        reservation.setReturnPlace(reservationDto.getRentalPlace());
+        reservation.setReturnPlace(reservationDto.getReturnPlace());
         reservation.setCar(carRepository.findById(reservationDto.getCarId()).orElseThrow(CarNotFoundException::new));
         reservation.setDriver(driverRepository.findById(reservationDto.getDriverId()).orElseThrow(DriverNotFoundException::new));
         reservation.setClient(clientRepository.findById(reservationDto.getClientId()).orElseThrow(ClientNotFoundException::new));

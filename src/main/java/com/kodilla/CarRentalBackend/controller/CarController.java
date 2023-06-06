@@ -82,7 +82,7 @@ public class CarController {
     }
 
     @DeleteMapping(value = "{carId}")
-    private ResponseEntity<Void> deleteCar(@PathVariable Long carId) throws CarNotFoundException {
+    public ResponseEntity<Void> deleteCar(@PathVariable Long carId) throws CarNotFoundException {
         carDbService.deleteCar(carId);
         return ResponseEntity.ok().build();
     }

@@ -21,7 +21,7 @@ public class DriverController {
     private final DriverMapper driverMapper;
 
     @GetMapping
-    private ResponseEntity<List<DriverDto>> getDriverList() {
+    public ResponseEntity<List<DriverDto>> getDriverList() {
         return ResponseEntity.ok(driverMapper.mapToDriverDtoList(driverDbService.getDriverList()));
     }
 

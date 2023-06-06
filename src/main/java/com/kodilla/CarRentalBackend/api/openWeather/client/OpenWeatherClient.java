@@ -46,12 +46,10 @@ public class OpenWeatherClient {
 
     public String parseWeatherInfo(String response) {
         JSONObject jsonObject = new JSONObject(response);
-        JSONArray weatherArray = jsonObject.getJSONArray("list");
+        JSONArray weatherArray = jsonObject.getJSONArray("weather");
 
         JSONObject weatherObj = weatherArray.getJSONObject(0);
-        JSONArray weatherDetails = weatherObj.getJSONArray("weather");
-        JSONObject weatherDetailObj = weatherDetails.getJSONObject(0);
 
-        return weatherDetailObj.getString("description");
+        return weatherObj.getString("description");
     }
 }

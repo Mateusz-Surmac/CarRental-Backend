@@ -25,6 +25,7 @@ public class CarDbService {
     }
 
     public List<Car> getCarList() {
+        filteredList = carRepository.findAll();
         return carRepository.findAll();
     }
 
